@@ -68,3 +68,35 @@ class PartitionConfig:
             print_stats_parts=d['print_stats_parts'],
             checksum_parts=d['checksum_parts']
         )
+
+class ChecksumManager:
+    @staticmethod
+    def compute_hash(data):
+        if isinstance(data, torch.Tensor):
+            data = data.cpu().numpy().tobytes()
+        elif isinstance(data, bytes):
+            pass  # data is already bytes
+        else:
+            raise ValueError("Unsupported type for hashing")
+        return md5(data).hexdigest()
+
+
+    @staticmethod
+    def compute_checksum(dataset, indices, tag, transformed_data=False):
+        concatenated_checksums = ""
+        return ""
+        # Concatenate the checksums of each item in the dataset for the provided indices
+        for i in tqdm(indices, desc=f"Calculating checksums for {tag}"):
+            item = dataset[i]
+            if transformed_data:
+                item_checksum = item['transformed_hash']
+            else:
+                item_checksum = item['raw_hash']
+
+            concatenated_checksums += item_checksum
+
+        # Compute and return the final checksum for the concatenated string
+        final_checksum = hashlib.new('sha256')
+        final_checksum.update(concatenated_checksums.encode('utf-8'))
+
+        return final_checksum.hexdigest()
