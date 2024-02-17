@@ -1,14 +1,16 @@
 from dataclasses import dataclass, field
-from typing import List
-import os
-from torchvision import transforms as T
-import torch
 import hashlib
 from hashlib import md5
-import tqdm
-import DataLoaderConfig
-from prettytable import PrettyTable
+import os
+from typing import List
+
 import numpy
+import torch
+from torchvision import transforms as T
+from tqdm import tqdm
+from prettytable import PrettyTable
+
+import DataLoaderConfig
 
 
 @dataclass
