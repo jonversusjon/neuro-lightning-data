@@ -6,6 +6,8 @@ from typing import List
 
 import numpy
 import torch
+import torch.utils.data as data
+from torch.utils.data import Dataset, DataLoader, random_split, Subset
 from torchvision import transforms as T
 from tqdm import tqdm
 from prettytable import PrettyTable
