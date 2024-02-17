@@ -3,6 +3,30 @@ from typing import List
 import os
 
 @dataclass
+class DataLoaderConfig:
+    batch_size: int = 8
+    num_workers: int = 0
+    drop_last: bool = False
+    pin_memory: bool = False
+
+    def to_dict(self):
+        return {
+            'batch_size': self.batch_size,
+            'num_workers': self.num_workers,
+            'drop_last': self.drop_last,
+            'pin_memory': self.pin_memory,
+        }
+
+    @classmethod
+    def from_dict(cls, d):
+        return cls(
+            batch_size=d.get('batch_size', 8),
+            num_workers=d.get('num_workers', 0),
+            drop_last=d.get('drop_last', False),
+            pin_memory=d.get('pin_memory', False)
+        )
+        
+@dataclass
 class PartitionConfig:
     """Configuration data for partitioning a dataset."""
     val_split: float = 0.2  # Validation split ratio
